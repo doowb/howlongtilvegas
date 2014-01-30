@@ -1,0 +1,5 @@
+cron:
+- description: hourly update
+  url: /tasks/sendupdate
+  schedule: every 1 hours synchronized
+  timezone: EST

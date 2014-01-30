@@ -1,0 +1,136 @@
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <script type="text/javascript" src="./scripts/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="./scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="./scripts/jquery.lwtCountdown-1.0.js"></script>
+    <link rel="Stylesheet" type="text/css" href="./stylesheets/main.css" />
+    <style type="text/css">
+    .main
+    {
+        width:660px;
+        height:120px;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:100px;
+        /*border: 2px solid #000000;*/
+    }
+
+	#countdown_messages
+	{
+		margin: 5px 5px 5px 5px;
+	}
+    </style>
+
+	<script language="javascript" type="text/javascript">
+
+	function getQuerystring(key, default_)
+	{
+	  if (default_==null) default_="";
+	  key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	  var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
+	  var qs = regex.exec(window.location.href);
+	  if(qs == null)
+		return default_;
+	  else
+		return qs[1];
+	}
+
+    $(document).ready(function () {
+        var now = new Date();
+		var code = getQuerystring('code',"1");
+
+		if (code.length == 0)
+		{
+			$('#countdown_dashboard').hide();
+			$('#countdown_messages').append("Enter your trip code: ");
+		}
+		else
+		{
+		    var leave = new Date('03/19/2014 20:50:00');
+			var ret = new Date('03/23/2014 18:55:00');
+
+			if (now > ret)
+			{
+				$("#countdown_messages").append("Your trip has already ended.");
+			}
+			else if (now > leave && now < ret)
+			{
+				$("#countdown_messages").append("You're on your trip right now! You will return home in: ");
+
+				$('#countdown_dashboard').countDown({
+					targetDate: {
+						'day': ret.getDate(),
+						'month': ret.getMonth()+1,
+						'year': ret.getFullYear(),
+						'hour': ret.getHours(),
+						'min': ret.getMinutes(),
+						'sec': ret.getSeconds()
+					}
+				});
+
+			}
+			else
+			{
+
+				$("#countdown_messages").append("Your trip beings in: ");
+
+				$('#countdown_dashboard').countDown({
+					targetDate: {
+						'day': leave.getDate(),
+						'month': leave.getMonth()+1,
+						'year': leave.getFullYear(),
+						'hour': leave.getHours(),
+						'min': leave.getMinutes(),
+						'sec': leave.getSeconds()
+					}
+				});
+			}
+		}
+    });
+</script>
+
+    <title>How Long 'Til Vegas?</title>
+</head>
+<body>
+    <div class="main">
+		<div id="countdown_messages"></div>
+		<div id="countdown_dashboard">
+			<div class="dash weeks_dash">
+				<span class="dash_title">weeks</span>
+				<div class="digit">0</div>
+				<div class="digit">0</div>
+			</div>
+
+			<div class="dash days_dash">
+				<span class="dash_title">days</span>
+				<div class="digit">0</div>
+				<div class="digit">0</div>
+			</div>
+
+			<div class="dash hours_dash">
+				<span class="dash_title">hours</span>
+				<div class="digit">0</div>
+				<div class="digit">0</div>
+			</div>
+
+			<div class="dash minutes_dash">
+				<span class="dash_title">minutes</span>
+				<div class="digit">0</div>
+				<div class="digit">0</div>
+			</div>
+
+			<div class="dash seconds_dash">
+				<span class="dash_title">seconds</span>
+				<div class="digit">0</div>
+				<div class="digit">0</div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>
